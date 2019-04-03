@@ -29,7 +29,6 @@ bot.use(stage.middleware())
 
 
 let start = (ctx) => {
-  console.log(ctx.from)
   ctx.reply(
     text.hello,
     { reply_markup: { keyboard: buttons.hello, resize_keyboard: true, one_time_keyboard: true } }
@@ -78,6 +77,7 @@ afterMenu.hears(buttons.menu[1][0], (ctx) => { // about compet
   ctx.scene.leave('afterMenu')
 })
 
+
 getName.on('text', async (ctx) => {
   ctx.session.name = ctx.message.text
   ctx.reply(
@@ -107,6 +107,7 @@ getNum.on('contact', async (ctx) => {
   ctx.scene.enter('getPic')
 })
 
+
 getPic.on('photo', (ctx) => {
   ctx.reply(
     text.succes,
@@ -128,6 +129,12 @@ getPic.on('photo', (ctx) => {
   }
 })
 
+
+bot.on('message', (ctx) => {
+  start(ctx)
+})
+
+
 function sendError (err, id, nick) {
   if (!id) {
     return bot.telegram.sendMessage(data.dev, 'There`s an error! Text: ' + err)
@@ -135,4 +142,5 @@ function sendError (err, id, nick) {
   bot.telegram.sendMessage(data.dev, 'There`s an error! Text: ' + err + '\nUser: [' + nick + '](tg://user?id=' + id + ')')
 }
 
-bot.startPolling()
+bot.startWebhook('/testauf', null, 2106)
+// bot.startPolling()

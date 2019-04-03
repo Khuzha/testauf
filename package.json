@@ -1,0 +1,25 @@
+{
+  "name": "testauf",
+  "version": "1.0.0",
+  "description": "testauf",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Khuzha/testauf.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Khuzha/testauf/issues"
+  },
+  "homepage": "https://github.com/Khuzha/testauf#readme",
+  "dependencies": {
+    "mongodb": "^3.2.2",
+    "nodemon": "^1.18.10",
+    "telegraf": "^3.28.0"
+  }
+}

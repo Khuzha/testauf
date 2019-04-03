@@ -64,7 +64,10 @@ main.hears(buttons.hello[2][0], (ctx) => { // about project
 
 
 afterMenu.hears(buttons.menu[0][0], async (ctx) => { // participate
-  ctx.reply(text.getName)
+  ctx.reply(
+    text.getName,
+    { reply_markup: { keyboard: buttons.getName, resize_keyboard: true, one_time_keyboard: true } }
+    )
   await ctx.scene.leave('afterMenu')
   ctx.scene.enter('getName')
 })
@@ -86,6 +89,14 @@ getName.on('text', async (ctx) => {
   )
   await ctx.scene.leave('getName')
   ctx.scene.enter('getNum')
+})
+
+getName.on('contact', async (ctx) => {
+  ctx.session.name = ctx.message.contact.first_name
+  ctx.session.number = ctx.message.contact.phone_number
+  ctx.reply(text.getPic)
+  await ctx.scene.leave('getName')
+  ctx.scene.enter('getPic')
 })
 
 
@@ -119,7 +130,7 @@ getPic.on('photo', (ctx) => {
     bot.telegram.sendPhoto(
       key,
       ctx.message.photo[ctx.message.photo.length - 1].file_id,
-      { caption: `Новая заявка! \nИмя: ${ctx.session.name} \nномер: ${ctx.session.number}` }
+      { caption: `Новая заявка! \nИмя: [${ctx.session.name}](tg://user?id=${ctx.from.id}) \nномер: ${ctx.session.number}`, parse_mode: 'markdown' }
     )
       .catch((err) => {
         if (err.code !== 409) {
